@@ -28,7 +28,8 @@ class Enemy {
         this.curve = Math.random() * 200;
     };
     update() {
-        this.x = this.curve * Math.sin(this.angle * Math.PI / 180) + canvas.width/2 - this.width;
+        this.x = this.curve * Math.sin(this.angle * Math.PI / 180) +
+            (canvas.width / 2 - this.width / 2);
         //adds random sin wave movement 
         // this.y += this.curve * Math.sin(this.angle);
         this.angle += this.angleSpeed;
