@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 CANVAS_WIDTH = canvas.width = 500;
 CANVAS_HEIGHT = canvas.height = 1000;
 //create an array of enemies for the class to run through
-const numberOfEnemies = 10;
+const numberOfEnemies = 20;
 const enemiesArray = [];
 let gameFrame = 0;
 
@@ -12,20 +12,29 @@ class Enemy {
     constructor() {
         //pulls the image and sets it to the class
         this.image = new Image();
-        this.image.src = 'assets/enemies/enemy1.png';
-        // this.speed = Math.random() * 4 - 2;
-        this.spriteWidth = 293;
-        this.spriteHeight = 155;
-        this.width = this.spriteWidth / 2.5;
-        this.height = this.spriteHeight / 2.5;
+        this.image.src = 'assets/enemies/enemy3.png';
+        this.speed = Math.random() * 4 + 1;
+        this.spriteWidth = 218;
+        this.spriteHeight = 177;
+        this.width = this.spriteWidth / 2;
+        this.height = this.spriteHeight / 2;
         this.x = Math.random() * (canvas.width - this.width);
         this.y = Math.random() * (canvas.height - this.height);
         this.frame = 0;
-        this.flapSpeed = Math.floor(Math.random() * 5 + 2);
+        this.flapSpeed = Math.floor(Math.random() * 3 + 2);
+        //adds random sin wave movement 
+        this.angle = 0;
+        this.angleSpeed = Math.random() * 2;
+        this.curve = Math.random() * 200;
     };
     update() {
-        this.x += Math.random() * 15 - 7.5;
-        this.y += Math.random() * 10 - 5;
+        this.x = this.curve * Math.sin(this.angle * Math.PI / 180) + canvas.width/2 - this.width;
+        //adds random sin wave movement 
+        // this.y += this.curve * Math.sin(this.angle);
+        this.angle += this.angleSpeed;
+        if (this.x + this.width < 0) this.x = canvas.width;
+        // this.y += Math.random() * 10 - 5;
+        //animate sprites 
         if (gameFrame % this.flapSpeed == 0) {
             this.frame > 4 ? this.frame = 0 : this.frame++;
         }
@@ -53,6 +62,6 @@ function animate() {
     requestAnimationFrame(animate);
 };
 
-animate(); 
+animate();
 
 
